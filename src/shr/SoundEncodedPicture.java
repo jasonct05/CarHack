@@ -20,7 +20,7 @@ public class SoundEncodedPicture extends JPanel {
 
         for(int i = 0; i < this.colorArray.length; i++) {
             g2.setColor(this.colorArray[i]);
-            g2.fillRect(i * (this.length / this.colorArray.length), 0, (this.length / this.colorArray.length), this.height);
+            g2.fillRect(i * (this.length / this.colorArray.length) * 4, 0, (this.length / this.colorArray.length) * 4, this.height);
         }
     }
 }

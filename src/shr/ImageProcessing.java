@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import java.util.*;
 
 public class ImageProcessing {
-    public static final int length = 4096 * 2;
+    public static final int length = 4096 / 4;
     public static final int height = 400;
 
     public static void generateAndSaveImage(Color[] colorArray) {
@@ -34,7 +34,7 @@ public class ImageProcessing {
         final String dir = System.getProperty("user.dir");
         Random r = new Random();
         try {
-            ImageIO.write(image, "jpg", new File("data/train/police_car/police_car" + r.nextInt(1000) + ".jpg"));
+            ImageIO.write(image, "jpg", new File("data/train/test_data" + r.nextInt(1000) + ".jpg"));
         } catch (Exception e) {
             System.err.println("Caught Exception: " + e);
         }

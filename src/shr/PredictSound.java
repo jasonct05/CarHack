@@ -15,8 +15,8 @@ public class PredictSound {
         }
 
         double[] fourierResults = FourierTransform.doTransform(inputForFourier);
-        int[] roundedFourierResults = new int[fourierResults.length / 2];
-        for(int i = 0; i < roundedFourierResults.length / 2; i++) {
+        int[] roundedFourierResults = new int[fourierResults.length / 4];
+        for(int i = 0; i < roundedFourierResults.length / 4; i++) {
             roundedFourierResults[i] = (int)(Math.round(fourierResults[i]));
         }
         ImageProcessing.generateAndSaveImage(HashFunction.hashArray(roundedFourierResults));
@@ -56,7 +56,6 @@ public class PredictSound {
                 i += smoothing * 2;
             }
         }
-        //System.out.println(count);
         return count;
     }
 }
