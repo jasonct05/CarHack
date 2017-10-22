@@ -18,15 +18,15 @@ public class HashFunction {
         return new Color(redFunction(input), greenFunction(input), blueFunction(input));
     }
 
-    public static int greenFunction(int amp) {
-        return (int) (Math.sqrt(amp) * 5) % 255;
+    public static int redFunction(int amp) {
+        return (amp * 2) % 255;
     }
 
-    public static int redFunction(int amp) {
-        return (amp * 10) % 255;
+    public static int greenFunction(int amp) {
+        return (amp * 3) % 255;
     }
 
     public static int blueFunction(int amp) {
-        return (amp * amp) % 255;
+        return (amp * 5) % 255;
     }
 }

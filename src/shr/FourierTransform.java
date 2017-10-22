@@ -15,16 +15,9 @@ public class FourierTransform {
 
     public static double[] doTransform(int[] input) {
         // sanity check
-        if (input.length < INPUT_LENGTH) {
-            throw new IllegalArgumentException();
-        }
-
         Complex[] fftArray = FFT.fft(createComplexArray(input));
         double[] amplitude = getAmplitudes(fftArray);
-        double[] frequency = getFrequency(fftArray);
-        double[] result = plot(amplitude, frequency);
-        System.out.println("DEBUG FINAL RESULT: " + Arrays.toString(result));
-        return result;
+        return amplitude;
     }
 
     private static double[] plot(double[] amplitude, double[] frequency) {
@@ -41,7 +34,7 @@ public class FourierTransform {
     }
 
     private static Complex[] createComplexArray(int[] input) {
-        Complex[] complexArr = new Complex[INPUT_LENGTH];
+        Complex[] complexArr = new Complex[input.length];
         for (int i = 0; i < input.length; i++) {
             complexArr[i] = new Complex(input[i], 0.0);
         }

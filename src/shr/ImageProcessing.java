@@ -7,9 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import java.util.*;
 
 public class ImageProcessing {
-    public static final int length = 800;
+    public static final int length = 4096 * 2;
     public static final int height = 400;
 
     public static void generateAndSaveImage(Color[] colorArray) {
@@ -31,9 +32,9 @@ public class ImageProcessing {
         frame.paint(graphics2D);
 
         final String dir = System.getProperty("user.dir");
-
+        Random r = new Random();
         try {
-            ImageIO.write(image, "jpg", new File("data/sample_image.jpg"));
+            ImageIO.write(image, "jpg", new File("data/train/SAMPLE_OUTPUT.jpg")); // + r.nextInt(1000) + ".jpg"));
         } catch (Exception e) {
             System.err.println("Caught Exception: " + e);
         }

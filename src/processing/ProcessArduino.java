@@ -140,7 +140,7 @@ public class ProcessArduino implements SerialPortEventListener {
                         }
                     }
                 }
-                PredictSound.PredictSoundFromArray(data, SAMPLE_TIME_LENGTH);
+                PredictSound.PredictSoundFromArray(data);
             }
             Thread.sleep(100);
         }

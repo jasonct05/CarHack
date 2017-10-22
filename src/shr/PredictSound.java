@@ -6,21 +6,36 @@ import java.util.*;
 public class PredictSound {
     // totalTime is in ms
     public static final int interval = 50; //50ms
-    public static final int smoothing = 2;
-    public static int PredictSoundFromArray(List<Integer> input, int totalTime) {
-        double inputInterval = 1.0 * totalTime / input.size();
-        int sampleSize = (int) (interval / inputInterval);
-        int numberOfBlocks = totalTime / interval;
-        int[] frequencyResults = new int[numberOfBlocks];
-        for(int i = 0; i < numberOfBlocks; i++) {
-            int[] elements = new int[sampleSize];
-            for(int j = 0; j < sampleSize; j++) {
-                elements[j] = input.get(i * sampleSize + j);
-                frequencyResults[i] = findFrequency(elements);
-            }
+    public static final int smoothing = 1;
+    public static final int POWER_INPUT = 4096;
+    public static int PredictSoundFromArray(List<Integer> input) {
+//        double inputInterval = 1.0 * totalTime / input.size();
+//        int sampleSize = (int) (interval / inputInterval);
+//        int numberOfBlocks = totalTime / interval;
+//
+//        int[] frequencyResults = new int[numberOfBlocks];
+//        for(int i = 0; i < numberOfBlocks; i++) {
+//            // int[] elements = new int[sampleSize];
+//            int[] elements = new int[128];
+//            for(int j = 0; j < elements.length; j++) {
+//                elements[j] = input.get(i * sampleSize + j);
+//                // frequencyResults[i] = findFrequency(elements);
+//            }
+//
+//            FourierTransform.doTransform(elements);
+//        }
+        System.out.println(input.size());
+        int[] inputForFourier = new int[POWER_INPUT];
+        for(int i = 0; i < inputForFourier.length; i++) {
+            inputForFourier[i] = input.get(i);
         }
 
-        ImageProcessing.generateAndSaveImage(HashFunction.hashArray(frequencyResults));
+        double[] fourierResults = FourierTransform.doTransform(inputForFourier);
+        int[] roundedFourierResults = new int[fourierResults.length];
+        for(int i = 0; i < roundedFourierResults.length; i++) {
+            roundedFourierResults[i] = (int)(Math.round(fourierResults[i]));
+        }
+        ImageProcessing.generateAndSaveImage(HashFunction.hashArray(roundedFourierResults));
 
         // todo: fix machine learning algorithm right here
         // {0: Police, 1: Firetruck, 2: Car, 3:Unclassified}
