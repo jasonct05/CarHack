@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="core-2.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/core-2.3.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/gson-2.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/okhttp-3.4.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/okio-1.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
