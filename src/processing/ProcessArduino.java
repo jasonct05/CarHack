@@ -9,15 +9,15 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import shr.PredictSound;
 
 
 public class ProcessArduino implements SerialPortEventListener {
     SerialPort serialPort;
     static Queue<String> inputString = new LinkedList<String>();
+    static final int NUMBER_OF_INPUT_PER_SAMPLE = 10;
+    static final int SAMPLE_TIME_LENGTH = 2000;
 
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
@@ -125,33 +125,22 @@ public class ProcessArduino implements SerialPortEventListener {
         };
         t.start();
 
-        System.out.println("START TEST");
-        int[] intInputArray = new int[SIZE];
         int currentIndex = 0;
 
         while (true) {
-            if(!inputString.isEmpty()) {
-                String input = inputString.remove();
-                String[] stringInputArray = input.split(",");
-                for (int i = 0; i < stringInputArray.length; i++) {
-                    try {
-                        intInputArray[currentIndex] = Integer.parseInt(stringInputArray[i]);
-                        currentIndex++;
-                        if (currentIndex == SIZE) {
-                            /* FOURIER TRANSFORM BYPASS */
-                            /*
-                            System.out.println(Arrays.toString(intInputArray));
-                            intInputArray = new int[SIZE];
-                            System.out.println(FourierTransform.doTransform(intInputArray));
-                            currentIndex = 0;
-                            break;
-                            */
-                            PredictSound.PredictSoundFromArray(intInputArray);
+            if(inputString.size() >= NUMBER_OF_INPUT_PER_SAMPLE) {
+                List<Integer> data = new ArrayList<>();
+                for (int i = 0; i < NUMBER_OF_INPUT_PER_SAMPLE; i++) {
+                    String[] stringInputArray = inputString.remove().split(",");
+                    for (int j = 0; j < stringInputArray.length; i++) {
+                        try {
+                            data.add(Integer.parseInt(stringInputArray[i]));
+                        } catch (Exception e) {
+                            // DO NOTHING
                         }
-                    } catch (Exception e) {
-                        // FUCK IT.
                     }
                 }
+                PredictSound.PredictSoundFromArray(data, SAMPLE_TIME_LENGTH);
             }
             Thread.sleep(100);
         }
