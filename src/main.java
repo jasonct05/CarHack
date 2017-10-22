@@ -1,5 +1,6 @@
 import shr.PredictSound;
 
+/*
 public class main {
     public static void main(String[] args) {
         int[] sampleInput = new int[20];
@@ -7,6 +8,7 @@ public class main {
             sampleInput[i] = i * 3;
         }
 
-        PredictSound.PredictSoundFromArray(sampleInput);
+        /PredictSound.PredictSoundFromArray(sampleInput);
     }
 }
+*/
