@@ -34,7 +34,7 @@ public class ImageProcessing {
         final String dir = System.getProperty("user.dir");
         Random r = new Random();
         try {
-            ImageIO.write(image, "jpg", new File("data/train/SAMPLE_OUTPUT.jpg")); // + r.nextInt(1000) + ".jpg"));
+            ImageIO.write(image, "jpg", new File("data/train/police_car/police_car" + r.nextInt(1000) + ".jpg"));
         } catch (Exception e) {
             System.err.println("Caught Exception: " + e);
         }
