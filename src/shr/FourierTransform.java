@@ -11,7 +11,7 @@ public class FourierTransform {
     public static final int RANGE = 20;
 
 
-    public int[] doTransform(int[] input) {
+    public double[] doTransform(int[] input) {
         // sanity check
         if (input.length < INPUT_LENGTH) {
             throw new IllegalArgumentException();
@@ -20,9 +20,13 @@ public class FourierTransform {
         Complex[] fftArray = FFT.fft(createComplexArray(input));
         double[] amplitude = getAmplitudes(fftArray);
         double[] frequency = getFrequency(fftArray);
+        return plot(amplitude, frequency);
     }
 
     private static double[] plot(double[] amplitude, double[] frequency) {
+        if (amplitude.length != frequency.length) {
+            throw new IllegalArgumentException();
+        }
         double[] plotTable = new double[MAX_FREQ / RANGE];
         for (int i = 0; i < amplitude.length; i++) {
             if (frequency[i] <= MAX_FREQ) {
