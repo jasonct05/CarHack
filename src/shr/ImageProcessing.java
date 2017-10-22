@@ -30,11 +30,13 @@ public class ImageProcessing {
         Graphics2D graphics2D = image.createGraphics();
         frame.paint(graphics2D);
 
+        final String dir = System.getProperty("user.dir");
+
         try {
-            ImageIO.write(image, "jpg", new File("src/data/sample_image.jpg"));
+            ImageIO.write(image, "jpg", new File("data/sample_image.jpg"));
         } catch (Exception e) {
             System.err.println("Caught Exception: " + e);
         }
-        //frame.dispose();
+        frame.dispose();
     }
 }
