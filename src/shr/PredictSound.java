@@ -9,7 +9,6 @@ public class PredictSound {
     public static final int smoothing = 1;
     public static final int POWER_INPUT = 4096;
     public static int PredictSoundFromArray(List<Integer> input) {
-        System.out.println(input.size());
         int[] inputForFourier = new int[POWER_INPUT];
         for(int i = 0; i < inputForFourier.length; i++) {
             inputForFourier[i] = input.get(i);
