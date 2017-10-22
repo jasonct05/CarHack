@@ -11,6 +11,7 @@ public class PredictSound {
     public static final int smoothing = 1;
     public static final int POWER_INPUT = 4096;
     public static int PredictSoundFromArray(List<Integer> input) {
+        System.out.println(input.size());
         int[] inputForFourier = new int[POWER_INPUT];
         for(int i = 0; i < inputForFourier.length; i++) {
             inputForFourier[i] = input.get(i);
@@ -32,7 +33,7 @@ public class PredictSound {
             System.out.println("ERROR");
         }
 
-        // {0: Unknown, 1: Ambulance, 2: Car, 3:Police Sound}
+        // {0: Unknown, 1: Ambulance, 2: Police}
         if (result.equals("ambulance-sound")) {
             return 1;
         } else if (result.equals("police-sound")) {

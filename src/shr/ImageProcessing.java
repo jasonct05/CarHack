@@ -32,7 +32,7 @@ public class ImageProcessing {
         frame.paint(graphics2D);
 
         Random r = new Random();
-        String filePath = "src/data/train/test_data" + r.nextInt(1000) + ".jpg";
+        String filePath = "src/data/train/output.jpg";
         try {
             ImageIO.write(image, "jpg", new File(filePath));
         } catch (Exception e) {

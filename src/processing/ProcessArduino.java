@@ -16,13 +16,14 @@ import shr.PredictSound;
 public class ProcessArduino implements SerialPortEventListener {
     SerialPort serialPort;
     static Queue<String> inputString = new LinkedList<String>();
-    static final int NUMBER_OF_INPUT_PER_SAMPLE = 10;
+    static final int NUMBER_OF_INPUT_PER_SAMPLE = 60;
     static final int SAMPLE_TIME_LENGTH = 2000;
 
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
             "/dev/tty.usbserial-A9007UX1", // Mac OS X
             "/dev/cu.usbmodem1411", // CUSTOOMMMMMM
+            "/dev/cu.usbmodem1421",
             "/dev/ttyACM0", // Raspberry Pi
             "/dev/ttyUSB0", // Linux
             "COM3", // Windows
@@ -34,7 +35,7 @@ public class ProcessArduino implements SerialPortEventListener {
      */
     private BufferedReader input;
     /** The output stream to the port */
-    private OutputStream output;
+    private static OutputStream output;
     /** Milliseconds to block while waiting for port open */
     private static final int TIME_OUT = 2000;
     /** Default bits per second for COM port. */
@@ -140,8 +141,12 @@ public class ProcessArduino implements SerialPortEventListener {
                         }
                     }
                 }
+                // {0: Unknown, 1: Ambulance, 2: Police}
                 int result = PredictSound.PredictSoundFromArray(data);
-                System.out.println(result);
+                System.out.println("RESULT: " + result);
+                /* TODO: OUTPUT TO SERIAL HERE */
+                output.write(result);
+                output.flush();
             }
             Thread.sleep(100);
         }

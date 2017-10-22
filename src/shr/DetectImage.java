@@ -38,11 +38,12 @@ public class DetectImage {
             for(Prediction p:predictionData) {
                 Concept c = p.asConcept();
                 if (c.value() > max) {
+                    System.out.println(c.name() + ": " + c.value());
                     max = c.value();
                     result = c.name();
                 }
             }
-            if (max > 0.5) {
+            if (max > 0.8) {
                 return result;
             }
         }
