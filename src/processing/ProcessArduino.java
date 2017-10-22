@@ -12,8 +12,7 @@ import gnu.io.SerialPortEventListener;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Queue;
-
-import shr.FourierTransform;
+import shr.PredictSound;
 
 
 public class ProcessArduino implements SerialPortEventListener {
@@ -40,6 +39,7 @@ public class ProcessArduino implements SerialPortEventListener {
     private static final int TIME_OUT = 2000;
     /** Default bits per second for COM port. */
     private static final int DATA_RATE = 115200;
+    private static final int SIZE = 800;
 
     public void initialize() {
         // the next line is for Raspberry Pi and
@@ -105,7 +105,6 @@ public class ProcessArduino implements SerialPortEventListener {
         if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
             try {
                 String inputLine = input.readLine();
-                System.out.println(inputLine);
                 inputString.add(inputLine);
             } catch (Exception e) {
                 System.err.println(e.toString());
@@ -127,23 +126,34 @@ public class ProcessArduino implements SerialPortEventListener {
         t.start();
 
         System.out.println("START TEST");
-        int[] intInputArray = new int[8192];
+        int[] intInputArray = new int[SIZE];
         int currentIndex = 0;
+
         while (true) {
             if(!inputString.isEmpty()) {
                 String input = inputString.remove();
                 String[] stringInputArray = input.split(",");
-
-                for (int i = 0; i < intInputArray.length; i++) {
-                    intInputArray[currentIndex] = Integer.parseInt(stringInputArray[i]);
-                    currentIndex++;
-                    if (currentIndex == 8192) {
-                        System.out.println(FourierTransform.doTransform(intInputArray));
-                        intInputArray = new int[8192];
-                        break;
+                for (int i = 0; i < stringInputArray.length; i++) {
+                    try {
+                        intInputArray[currentIndex] = Integer.parseInt(stringInputArray[i]);
+                        currentIndex++;
+                        if (currentIndex == SIZE) {
+                            /* FOURIER TRANSFORM BYPASS */
+                            /*
+                            System.out.println(Arrays.toString(intInputArray));
+                            intInputArray = new int[SIZE];
+                            System.out.println(FourierTransform.doTransform(intInputArray));
+                            currentIndex = 0;
+                            break;
+                            */
+                            PredictSound.PredictSoundFromArray(intInputArray);
+                        }
+                    } catch (Exception e) {
+                        // FUCK IT.
                     }
                 }
             }
+            Thread.sleep(100);
         }
     }
 }

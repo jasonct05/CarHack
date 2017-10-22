@@ -1,5 +1,7 @@
 package shr;
 
+import java.util.*;
+
 public class FourierTransform {
 
     public static final int Fs = 3000;
@@ -11,7 +13,7 @@ public class FourierTransform {
     public static final int RANGE = 20;
 
 
-    public double[] doTransform(int[] input) {
+    public static double[] doTransform(int[] input) {
         // sanity check
         if (input.length < INPUT_LENGTH) {
             throw new IllegalArgumentException();
@@ -20,7 +22,9 @@ public class FourierTransform {
         Complex[] fftArray = FFT.fft(createComplexArray(input));
         double[] amplitude = getAmplitudes(fftArray);
         double[] frequency = getFrequency(fftArray);
-        return plot(amplitude, frequency);
+        double[] result = plot(amplitude, frequency);
+        System.out.println("DEBUG FINAL RESULT: " + Arrays.toString(result));
+        return result;
     }
 
     private static double[] plot(double[] amplitude, double[] frequency) {
@@ -54,7 +58,7 @@ public class FourierTransform {
     }
 
     private static double[] getFrequency(Complex[] fftArray) {
-        double[] frequency = new double[L / 2];
+        double[] frequency = new double[fftArray.length];
         for (int i = 0; i < frequency.length; i++) {
             frequency[i] = Fs * fftArray[i].abs() / n;
         }

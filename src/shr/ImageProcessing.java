@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class ImageProcessing {
-    public static final int length = 400;
-    public static final int height = 200;
+    public static final int length = 800;
+    public static final int height = 400;
 
     public static void generateAndSaveImage(Color[] colorArray) {
         // draw the image
