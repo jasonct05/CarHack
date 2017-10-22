@@ -29,11 +29,12 @@ public class ImageProcessing {
         BufferedImage image = new BufferedImage(length, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = image.createGraphics();
         frame.paint(graphics2D);
+
         try {
-            ImageIO.write(image, "jpeg", new File("src/data/sample_image.jpeg"));
+            ImageIO.write(image, "jpg", new File("src/data/sample_image.jpg"));
         } catch (Exception e) {
             System.err.println("Caught Exception: " + e);
         }
-        frame.dispose();
+        //frame.dispose();
     }
 }

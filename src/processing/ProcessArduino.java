@@ -16,7 +16,7 @@ import shr.PredictSound;
 public class ProcessArduino implements SerialPortEventListener {
     SerialPort serialPort;
     static Queue<String> inputString = new LinkedList<String>();
-    static final int NUMBER_OF_INPUT_PER_SAMPLE = 9;
+    static final int NUMBER_OF_INPUT_PER_SAMPLE = 10;
     static final int SAMPLE_TIME_LENGTH = 2000;
 
     /** The port we're normally going to use. */
@@ -132,15 +132,14 @@ public class ProcessArduino implements SerialPortEventListener {
                 List<Integer> data = new ArrayList<>();
                 for (int i = 0; i < NUMBER_OF_INPUT_PER_SAMPLE; i++) {
                     String[] stringInputArray = inputString.remove().split(",");
-                    for (int j = 0; j < stringInputArray.length; i++) {
+                    for (int j = 0; j < stringInputArray.length; j++) {
                         try {
-                            data.add(Integer.parseInt(stringInputArray[i]));
+                            data.add(Integer.parseInt(stringInputArray[j]));
                         } catch (Exception e) {
                             // DO NOTHING
                         }
                     }
                 }
-                System.out.println(data);
                 PredictSound.PredictSoundFromArray(data, SAMPLE_TIME_LENGTH);
             }
             Thread.sleep(100);
