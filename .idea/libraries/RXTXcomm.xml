@@ -2,6 +2,10 @@
   <library name="RXTXcomm">
     <CLASSES>
       <root url="jar://$USER_HOME$/Downloads/RXTXcomm.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files/core-2.3.0.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files/gson-2.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files/okhttp-3.4.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files/okio-1.9.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

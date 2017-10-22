@@ -1,7 +1,9 @@
 package shr;
 
-import java.awt.Color;
 import java.util.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 public class PredictSound {
     // totalTime is in ms
@@ -19,10 +21,25 @@ public class PredictSound {
         for(int i = 0; i < roundedFourierResults.length / 4; i++) {
             roundedFourierResults[i] = (int)(Math.round(fourierResults[i]));
         }
-        ImageProcessing.generateAndSaveImage(HashFunction.hashArray(roundedFourierResults));
-        // todo: fix machine learning algorithm right here
-        // {0: Police, 1: Firetruck, 2: Car, 3:Unclassified}
-        return 0;
+        String filePath = ImageProcessing.generateAndSaveImage(HashFunction.hashArray(roundedFourierResults));
+
+        File img = new File(filePath);
+        String result = "";
+        try {
+            BufferedImage image = ImageIO.read(img);
+            result = DetectImage.detectImage(image);
+        } catch (Exception e) {
+            System.out.println("ERROR");
+        }
+
+        // {0: Unknown, 1: Ambulance, 2: Car, 3:Police Sound}
+        if (result.equals("ambulance-sound")) {
+            return 1;
+        } else if (result.equals("police-sound")) {
+            return 2;
+        } else {
+            return 0;
+        }
     }
 
     public static int findAverage(int[] input) {

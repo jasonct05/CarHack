@@ -1,4 +1,4 @@
-package processing;
+package shr;
 
 import clarifai2.api.ClarifaiBuilder;
 import clarifai2.api.ClarifaiClient;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class DetectImage {
-    public static void detectImage(BufferedImage b) throws IOException{
+    public static String detectImage(BufferedImage b) throws IOException{
         final ClarifaiClient client = new ClarifaiBuilder("eec01429deb44fb591371f69d9fd6ee2").buildSync();
         byte[] imageInByte = BImageToByte(b);
 
@@ -32,13 +32,21 @@ public class DetectImage {
                         .executeSync().get();
 
         for (ClarifaiOutput<Prediction> oc: predictionResults) {
+            double max = 0;
+            String result = "";
             List<Prediction> predictionData = oc.data();
             for(Prediction p:predictionData) {
                 Concept c = p.asConcept();
-                System.out.println(c.name());
-                System.out.println(c.value());
+                if (c.value() > max) {
+                    max = c.value();
+                    result = c.name();
+                }
+            }
+            if (max > 0.5) {
+                return result;
             }
         }
+        return "";
     }
 
     // converts image representation to bytes

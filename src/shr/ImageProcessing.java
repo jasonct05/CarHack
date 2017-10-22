@@ -13,7 +13,7 @@ public class ImageProcessing {
     public static final int length = 4096 / 4;
     public static final int height = 400;
 
-    public static void generateAndSaveImage(Color[] colorArray) {
+    public static String generateAndSaveImage(Color[] colorArray) {
         // draw the image
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -31,13 +31,14 @@ public class ImageProcessing {
         Graphics2D graphics2D = image.createGraphics();
         frame.paint(graphics2D);
 
-        final String dir = System.getProperty("user.dir");
         Random r = new Random();
+        String filePath = "src/data/train/test_data" + r.nextInt(1000) + ".jpg";
         try {
-            ImageIO.write(image, "jpg", new File("data/train/test_data" + r.nextInt(1000) + ".jpg"));
+            ImageIO.write(image, "jpg", new File(filePath));
         } catch (Exception e) {
             System.err.println("Caught Exception: " + e);
         }
         frame.dispose();
+        return filePath;
     }
 }
