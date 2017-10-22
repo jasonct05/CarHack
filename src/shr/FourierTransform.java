@@ -7,11 +7,13 @@ public class FourierTransform {
     public static final int L = 6000;
     public static final int n = 15;
     public static final int INPUT_LENGTH = 32768;
+    public static final int MAX_FREQ = 2000;
+    public static final int RANGE = 20;
 
 
     public int[] doTransform(int[] input) {
         // sanity check
-        if (input < INPUT_LENGTH) {
+        if (input.length < INPUT_LENGTH) {
             throw new IllegalArgumentException();
         }
 
@@ -20,19 +22,15 @@ public class FourierTransform {
         double[] frequency = getFrequency(fftArray);
     }
 
-    /*
-    public static final int MAX_FREQ = 2000;
-    public static final int RANGE = 20;
-    public static final int INDEX = amplitude.length;
-
-    double[] plotTable = new double[MAX_FREQ / RANGE];
-
-    for(int i = 0; i < INDEX; i++) {
-        if (frequency[i] <= MAX_FREQ) {
-            plotTable[(frequency[i] - 1) / RANGE] = amplitude[i];
+    private static double[] plot(double[] amplitude, double[] frequency) {
+        double[] plotTable = new double[MAX_FREQ / RANGE];
+        for (int i = 0; i < amplitude.length; i++) {
+            if (frequency[i] <= MAX_FREQ) {
+                plotTable[(int)((frequency[i] - 1) / RANGE)] += amplitude[i];
+            }
         }
+        return plotTable;
     }
-    */
 
     private static Complex[] createComplexArray(int[] input) {
         Complex[] complexArr = new Complex[INPUT_LENGTH];
