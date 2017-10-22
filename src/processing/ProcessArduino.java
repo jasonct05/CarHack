@@ -8,11 +8,16 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+
 import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class ProcessArduino implements SerialPortEventListener {
     SerialPort serialPort;
+    static Queue<String> inputString;
+
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
             "/dev/tty.usbserial-A9007UX1", // Mac OS X
@@ -99,6 +104,7 @@ public class ProcessArduino implements SerialPortEventListener {
             try {
                 String inputLine = input.readLine();
                 System.out.println(inputLine);
+                inputString.add(inputLine);
             } catch (Exception e) {
                 System.err.println(e.toString());
             }
@@ -118,5 +124,20 @@ public class ProcessArduino implements SerialPortEventListener {
         };
         t.start();
         System.out.println("Started");
+
+        inputString = new LinkedList<String>();
+        while (true) {
+            if(!inputString.isEmpty()) {
+                String input = inputString.poll();
+                String[] stringInputArray = input.split(",");
+
+                int[] intInputArray = new int[8192];
+                for (int i = 0; i < intInputArray.length; i++) {
+                    intInputArray[i] = Integer.parseInt(stringInputArray[i]);
+                }
+
+
+            }
+        }
     }
 }
