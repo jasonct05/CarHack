@@ -2,11 +2,11 @@ package shr;
 
 public class FourierTransform {
 
-    public static final int Fs = 20000;
-    public static final double T = 1 / Fs;
-    public static final int L = 6000;
+    public static final int Fs = 3000;
+    public static final int INPUT_LENGTH = 8192;
+    public static final int L = 2730;
     public static final int n = 15;
-    public static final int INPUT_LENGTH = 32768;
+
     public static final int MAX_FREQ = 2000;
     public static final int RANGE = 20;
 
