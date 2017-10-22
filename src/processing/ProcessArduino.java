@@ -13,10 +13,12 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import shr.FourierTransform;
+
 
 public class ProcessArduino implements SerialPortEventListener {
     SerialPort serialPort;
-    static Queue<String> inputString;
+    static Queue<String> inputString = new LinkedList<String>();
 
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
@@ -123,20 +125,24 @@ public class ProcessArduino implements SerialPortEventListener {
             }
         };
         t.start();
-        System.out.println("Started");
 
-        inputString = new LinkedList<String>();
+        System.out.println("START TEST");
+        int[] intInputArray = new int[8192];
+        int currentIndex = 0;
         while (true) {
             if(!inputString.isEmpty()) {
-                String input = inputString.poll();
+                String input = inputString.remove();
                 String[] stringInputArray = input.split(",");
 
-                int[] intInputArray = new int[8192];
                 for (int i = 0; i < intInputArray.length; i++) {
-                    intInputArray[i] = Integer.parseInt(stringInputArray[i]);
+                    intInputArray[currentIndex] = Integer.parseInt(stringInputArray[i]);
+                    currentIndex++;
+                    if (currentIndex == 8192) {
+                        System.out.println(FourierTransform.doTransform(intInputArray));
+                        intInputArray = new int[8192];
+                        break;
+                    }
                 }
-
-
             }
         }
     }
